@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/FolderChooser.iml" filepath="$PROJECT_DIR$/FolderChooser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/folderchooser-dialog/folderchooser-dialog.iml" filepath="$PROJECT_DIR$/folderchooser-dialog/folderchooser-dialog.iml" />
+    </modules>
+  </component>
+</project>
