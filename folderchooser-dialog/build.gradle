@@ -2,18 +2,18 @@ apply plugin: 'com.android.library'
 
 ext {
     bintrayRepo = 'maven'
-    bintrayName = 'chooser'
+    bintrayName = 'folderchooser-dialog'
 
-    publishedGroupId = 'com.ramiloif'
-    libraryName = 'Folder-Chooser'
-    artifact = 'folder-choose'
+    publishedGroupId = 'com.io.tools.android.ramiloif.folderchooser'
+    libraryName = 'folderchooser-dialog'
+    artifact = 'folderchooser-dialog'
 
     libraryDescription = 'An alert dialog for folder choosing'
 
-      siteUrl = 'https://github.com/nuuneoi/FBLikeAndroid'
-     gitUrl = 'https://github.com/nuuneoi/FBLikeAndroid.git'
+    siteUrl = 'https://github.com/ramiloif/android-folderchooser'
+    gitUrl = 'https://github.com/ramiloif/android-folderchooser.git'
 
-    libraryVersion = '1.0.0'
+    libraryVersion = '1.0.3'
 
     developerId = 'ramiloif'
     developerName = 'Roman Loiferman'

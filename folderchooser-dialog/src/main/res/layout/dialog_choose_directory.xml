@@ -11,6 +11,7 @@
         android:paddingTop="16dp"
         android:divider="@android:drawable/divider_horizontal_bright"
         android:dividerHeight="0.001dp"
+        android:layout_above="@+id/buttons"
         >
     </android.support.v7.widget.RecyclerView>
 
@@ -27,6 +28,30 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:id="@+id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:gravity="right">
+
+        <Button
+        android:id="@+id/negative_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/Widget.AppCompat.Button.Borderless"
+        />
+
+        <Button
+            android:id="@+id/positive_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Button.Borderless"
+        />
+    </LinearLayout>
 
 
 </RelativeLayout>

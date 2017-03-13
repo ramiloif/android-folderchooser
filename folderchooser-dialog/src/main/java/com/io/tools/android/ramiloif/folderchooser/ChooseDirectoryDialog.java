@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,8 +28,8 @@ import java.util.List;
 
 public class ChooseDirectoryDialog extends AlertDialog{
 
-
     private TextView mTitleTV;
+    private boolean mChoosed = false;
 
     public interface DirectoryChooseListener {
 
@@ -36,8 +37,6 @@ public class ChooseDirectoryDialog extends AlertDialog{
         void onCancel();
 
     }
-    private  OnClickListener cancelListener;
-    private  OnClickListener okListener;
     private RecyclerView.Adapter mAdapter;
     private String mOkText = "Choose Folder";
     private String mCancelText = "Cancel";
@@ -49,21 +48,6 @@ public class ChooseDirectoryDialog extends AlertDialog{
 
     public ChooseDirectoryDialog(@NonNull Context context) {
         super(context);
-
-         okListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mListener.onDirectoryPicked(mSelectedDir.getAbsolutePath());
-            }
-        };
-
-         cancelListener = new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                mListener.onCancel();
-            }
-        };
-
     }
 
     public ChooseDirectoryDialog setOKText(String text) {
@@ -99,9 +83,35 @@ public class ChooseDirectoryDialog extends AlertDialog{
         mTitleTV =  (TextView)findViewById(R.id.choose_title);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = createAdapter();
+        Button mPositiveButton = (Button) findViewById(R.id.positive_button);
+        Button mNegativeButton = (Button) findViewById(R.id.negative_button);
+        this.setOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if(!mChoosed){
+                    mListener.onCancel();
+                }
+            }
+        });
+        mNegativeButton.setText(mCancelText);
+        mNegativeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+
+            }
+        });
+        mPositiveButton.setText(this.mOkText);
+        mPositiveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mChoosed = true;
+                dismiss();
+                mListener.onDirectoryPicked(mSelectedDir.getAbsolutePath());
+            }
+        });
         recyclerView.setAdapter(mAdapter);
         walkToDir(startDir);
-
     }
 
     @Override
@@ -113,6 +123,8 @@ public class ChooseDirectoryDialog extends AlertDialog{
             walkToDir(mSelectedDir);
         }
     }
+
+
 
     private RecyclerView.Adapter createAdapter(){
 
