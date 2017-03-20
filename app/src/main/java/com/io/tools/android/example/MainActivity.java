@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                 ChooseDirectoryDialog dialog =
                 new ChooseDirectoryDialog(MainActivity.this).
 
-                        setmTitleText("Hello jcenter").
+                        setTitleText("Hello jcenter").
                 setStartDir(Environment.getExternalStorageDirectory().getAbsoluteFile())
                 .setOnPickListener(new ChooseDirectoryDialog.DirectoryChooseListener() {
                     @Override

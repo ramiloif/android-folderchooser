@@ -28,7 +28,7 @@ import java.util.List;
 
 public class ChooseDirectoryDialog extends AlertDialog{
 
-    private TextView mTitleTV;
+    private TextView mFolderNameTV;
     private boolean mChoosed = false;
 
     public interface DirectoryChooseListener {
@@ -40,7 +40,7 @@ public class ChooseDirectoryDialog extends AlertDialog{
     private RecyclerView.Adapter mAdapter;
     private String mOkText = "Choose Folder";
     private String mCancelText = "Cancel";
-    private String mTitleText = "Pick";
+    private String mTitleText = "Pick Folder";
     private File startDir = Environment.getExternalStorageDirectory();
     private File mSelectedDir;
     private DirectoryChooseListener mListener;
@@ -55,12 +55,12 @@ public class ChooseDirectoryDialog extends AlertDialog{
         return this;
     }
 
-    public ChooseDirectoryDialog setmCancelText(String text) {
+    public ChooseDirectoryDialog setCancelText(String text) {
         mCancelText = text;
         return this;
     }
 
-    public ChooseDirectoryDialog setmTitleText(String text) {
+    public ChooseDirectoryDialog setTitleText(String text) {
         mTitleText = text;
         return this;
     }
@@ -80,7 +80,8 @@ public class ChooseDirectoryDialog extends AlertDialog{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dialog_choose_directory);
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.file_folder_recycler);
-        mTitleTV =  (TextView)findViewById(R.id.choose_title);
+        ((TextView)findViewById(R.id.title)).setText(mTitleText);
+        mFolderNameTV =  (TextView)findViewById(R.id.folder_name);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = createAdapter();
         Button mPositiveButton = (Button) findViewById(R.id.positive_button);
@@ -172,7 +173,7 @@ public class ChooseDirectoryDialog extends AlertDialog{
         mFilesList.addAll(Arrays.asList(file.listFiles()));
         mSelectedDir = file;
         mAdapter.notifyDataSetChanged();
-        mTitleTV.setText(buildTitleText());
+        mFolderNameTV.setText(buildTitleText());
     }
 
     private CharSequence buildTitleText() {
