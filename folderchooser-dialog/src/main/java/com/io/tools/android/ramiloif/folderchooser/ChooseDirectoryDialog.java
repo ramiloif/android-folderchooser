@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,18 +26,83 @@ import java.util.List;
  * Created by Rami Loiferman on 11/03/2017.
  */
 
-
 public class ChooseDirectoryDialog extends AlertDialog{
 
-    private TextView mFolderNameTV;
-    private boolean mChoosed = false;
+    public static class ChooseDirectoryDialogBuilder{
+        ChooseDirectoryDialog mDialog;
+
+        public ChooseDirectoryDialogBuilder(Context context){
+            mDialog = new ChooseDirectoryDialog(context);
+        }
+
+        public ChooseDirectoryDialogBuilder okText(String text) {
+            mDialog.mOkText = text;
+            return this;
+        }
+
+        public ChooseDirectoryDialogBuilder cancelText(String text) {
+            mDialog.mCancelText = text;
+            return this;
+        }
+
+        public ChooseDirectoryDialogBuilder titleText(String text) {
+            mDialog.mTitleText = text;
+            return this;
+        }
+
+        public ChooseDirectoryDialogBuilder startDir(File dir) {
+            mDialog.startDir = dir;
+            return this;
+        }
+
+        public ChooseDirectoryDialogBuilder onPickListener(DirectoryChooseListener listener){
+            mDialog.mListener = listener;
+            return this;
+        }
+
+        public ChooseDirectoryDialogBuilder neverAskAgainText(String mNeverAskAgainText) {
+            mDialog.mNeverAskAgainText = mNeverAskAgainText;
+            return this;
+        }
+
+        public ChooseDirectoryDialogBuilder showNeverAskAgain(boolean isShow) {
+            mDialog.mShowNeverAskAgain = isShow;
+            return this;
+        }
+
+        public ChooseDirectoryDialog build(){
+            return mDialog;
+        }
+    }
+
+    public class DialogResult{
+        private String mPath;
+        private boolean mAskAgain;
+
+        public String getPath() {
+            return mPath;
+        }
+
+        public boolean isAskAgain() {
+            return mAskAgain;
+        }
+    }
 
     public interface DirectoryChooseListener {
 
-        void onDirectoryPicked(String path);
+        void onDirectoryPicked(DialogResult result);
         void onCancel();
 
     }
+
+    public static ChooseDirectoryDialogBuilder builder(Context context){
+        return new ChooseDirectoryDialogBuilder(context);
+    }
+
+    private TextView mFolderNameTV;
+    private boolean mChoosed = false;
+    private CheckBox mShowAgainCHB;
+
     private RecyclerView.Adapter mAdapter;
     private String mOkText = "Choose Folder";
     private String mCancelText = "Cancel";
@@ -45,6 +111,8 @@ public class ChooseDirectoryDialog extends AlertDialog{
     private File mSelectedDir;
     private DirectoryChooseListener mListener;
     private final List<File> mFilesList = new ArrayList<>();
+    private String mNeverAskAgainText = "Never ask again";
+    private boolean mShowNeverAskAgain = false;
 
     public ChooseDirectoryDialog(@NonNull Context context) {
         super(context);
@@ -75,6 +143,16 @@ public class ChooseDirectoryDialog extends AlertDialog{
         return this;
     }
 
+    public ChooseDirectoryDialog setNeverAskAgainText(String mNeverAskAgainText) {
+        this.mNeverAskAgainText = mNeverAskAgainText;
+        return this;
+    }
+
+    public ChooseDirectoryDialog showNeverAskAgain(boolean isShow) {
+        this.mShowNeverAskAgain = isShow;
+        return this;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +160,11 @@ public class ChooseDirectoryDialog extends AlertDialog{
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.file_folder_recycler);
         ((TextView)findViewById(R.id.title)).setText(mTitleText);
         mFolderNameTV =  (TextView)findViewById(R.id.folder_name);
+        if(mShowNeverAskAgain){
+           mShowAgainCHB =  (CheckBox)findViewById(R.id.checkbox);
+            mShowAgainCHB.setText(mNeverAskAgainText);
+            mShowAgainCHB.setVisibility(View.VISIBLE);
+        }
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = createAdapter();
         Button mPositiveButton = (Button) findViewById(R.id.positive_button);
@@ -108,7 +191,12 @@ public class ChooseDirectoryDialog extends AlertDialog{
             public void onClick(View v) {
                 mChoosed = true;
                 dismiss();
-                mListener.onDirectoryPicked(mSelectedDir.getAbsolutePath());
+                DialogResult result = new DialogResult();
+                result.mPath = mSelectedDir.getAbsolutePath();
+                if(mShowNeverAskAgain){
+                    result.mAskAgain = mShowAgainCHB.isChecked();
+                }
+                mListener.onDirectoryPicked(result);
             }
         });
         recyclerView.setAdapter(mAdapter);

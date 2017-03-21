@@ -12,18 +12,23 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.io.tools.android.ramiloif.folderchooser.ChooseDirectoryDialog;
 
 public class MainActivity extends AppCompatActivity {
 
     public final static int READ_EXTERNAL_STORAGE = 15;
+    private Button mButtonWithNeverAsk;
+    private Button mButtonWithout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final TextView resultTV =  (TextView) findViewById(R.id.result);
         setSupportActionBar(toolbar);
         // Assume thisActivity is the current activity
         int permissionCheck = ContextCompat.checkSelfPermission(MainActivity. this,
@@ -39,29 +44,53 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.bt_with_never_ask_again).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(final View view) {
+            public void onClick(View v) {
                 ChooseDirectoryDialog dialog =
-                new ChooseDirectoryDialog(MainActivity.this).
+                        ChooseDirectoryDialog.builder(MainActivity.this).
 
-                        setTitleText("Hello jcenter").
-                setStartDir(Environment.getExternalStorageDirectory().getAbsoluteFile())
-                .setOnPickListener(new ChooseDirectoryDialog.DirectoryChooseListener() {
-                    @Override
-                    public void onDirectoryPicked(String path) {
-                        Snackbar.make(view,path , Snackbar.LENGTH_LONG).show();
-                    }
+                                titleText("Choose directory").
+                                startDir(Environment.getExternalStorageDirectory().getAbsoluteFile()).
+                                showNeverAskAgain(true).
+                                neverAskAgainText("Never ask again").
+                                onPickListener(new ChooseDirectoryDialog.DirectoryChooseListener() {
 
-                    @Override
-                    public void onCancel() {
+                                    @Override
+                                    public void onDirectoryPicked(ChooseDirectoryDialog.DialogResult result) {
+                                        resultTV.setText("You picked \n " + result.getPath() + "\n Never ask again = " + result.isAskAgain());
+                                    }
 
-                    }
-                });
+                                    @Override
+                                    public void onCancel() {
+                                        resultTV.setText("operation canceled");
+                                    }
+                                }).build();
                 dialog.show();
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            }
+        });
+
+        findViewById(R.id.bt_dialog).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                ChooseDirectoryDialog dialog =
+                        ChooseDirectoryDialog.builder(MainActivity.this).
+
+                                titleText("Choose directory").
+                                startDir(Environment.getExternalStorageDirectory().getAbsoluteFile())
+                                .onPickListener(new ChooseDirectoryDialog.DirectoryChooseListener() {
+
+                                    @Override
+                                    public void onDirectoryPicked(ChooseDirectoryDialog.DialogResult result) {
+                                        resultTV.setText("You picked \n " + result.getPath());
+                                    }
+
+                                    @Override
+                                    public void onCancel() {
+                                        resultTV.setText("operation canceled");
+                                    }
+                                }).build();
+                dialog.show();
             }
         });
     }

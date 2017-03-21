@@ -44,8 +44,9 @@
         android:id="@+id/checkbox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Never ask again"
         android:layout_above="@+id/buttons"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:visibility="gone"
     />
 
@@ -57,7 +58,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:gravity="right">
+        android:gravity="end">
 
         <Button
         android:id="@+id/negative_button"
@@ -70,7 +71,6 @@
             android:id="@+id/positive_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="bbb"
             style="@style/Widget.AppCompat.Button.Borderless.Colored" />
     </LinearLayout>
 
