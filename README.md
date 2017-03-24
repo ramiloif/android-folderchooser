@@ -18,9 +18,9 @@ ChooseDirectoryDialog dialog =
   onPickListener(new ChooseDirectoryDialog.DirectoryChooseListener() {
       @Override
       public void onDirectoryPicked(ChooseDirectoryDialog.DialogResult result) {
-          // Listener to users choise
-          // result.getPath() - The path of the folder choosed by user
-          // result.isAskAgain()  - Did the user checked the 'Neder ask again' Checkbox if true it means never ask again
+          // Listener to users choice
+          // result.getPath() - The path of the folder picked by user
+          // result.isAskAgain()  - Did the user checked the 'Never ask again' Checkbox if true it means never ask again
           resultTV.setText("You picked \n " + 
           result.getPath() +
           "\n Never ask again = " +

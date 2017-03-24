@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/ramiloif/android-folderchooser'
     gitUrl = 'https://github.com/ramiloif/android-folderchooser.git'
 
-    libraryVersion = '1.0.4'
+    libraryVersion = '1.0.6'
 
     developerId = 'ramiloif'
     developerName = 'Roman Loiferman'
@@ -56,5 +56,5 @@ dependencies {
     compile 'org.projectlombok:lombok:1.16.14'
 }
 
-//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

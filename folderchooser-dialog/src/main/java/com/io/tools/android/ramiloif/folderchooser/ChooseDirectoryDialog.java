@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -114,7 +113,7 @@ public class ChooseDirectoryDialog extends AlertDialog{
     private String mNeverAskAgainText = "Never ask again";
     private boolean mShowNeverAskAgain = false;
 
-    public ChooseDirectoryDialog(@NonNull Context context) {
+    public ChooseDirectoryDialog(Context context) {
         super(context);
     }
 
