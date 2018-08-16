@@ -1,0 +1,3 @@
+[submodule "in/your/face"]
+	path = in/your/face
+	url = https://github.com/ramiloif/NodeTemplate.git
